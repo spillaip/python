@@ -1,3 +1,5 @@
+from datetime import date
+from datetime import datetime
 import random
 from random import randint, randrange
 #from posixpath import split
@@ -12,6 +14,8 @@ reviewlist = []
 totalquestions = 0
 correctanswer = 0
 totalmarks = 0
+
+# past scores
 
 
 file = open('Strategyforclinicals.csv', 'r')
@@ -55,11 +59,32 @@ while True:
         print("Total Questions: "+ str(totalquestions) + " \n" )
         print("Total Correctly Answers: "+ str(correctanswer) + " \n")
 
+        
+
         #print(reviewlist)
         outputfile = open("review.txt","w")
         for element in reviewlist:
             outputfile.write(element + "\n")
         outputfile.close()
+
+        #Write to past scores file
+        # datetime object containing current date and time
+        now = datetime.now()
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+
+
+        pastScoresFile = open('pastscores.txt','a+')
+        pastScoresFile.write("------------")
+        pastScoresFile.write("Date : "+dt_string)
+        pastScoresFile.write("------------")
+        pastScoresFile.write("\nSession Summary\n")
+        pastScoresFile.write("Total Marks: " + str(totalmarks) + " \n")
+        pastScoresFile.write("Total Questions: "+ str(totalquestions) + " \n" )
+        pastScoresFile.write("Total Correctly Answers: "+ str(correctanswer) + " \n")
+        pastScoresFile.write("------------")
+        pastScoresFile.close()
+
+
         break
     else:
         # Track total questions, and correct answers
